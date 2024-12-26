@@ -3,92 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bomberman Mobil</title>
+    <title>Bomberman-játék</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
             background-image: url('hater.png');
             background-size: cover;
             background-position: center;
-        }
-
-        #gameContainer {
-            display: grid;
-            grid-template-areas: 
-                "description story"
-                "controls game"
-                "controls actions";
-            grid-template-columns: 1fr 3fr;
-            grid-template-rows: auto auto auto;
-            gap: 10px;
-            width: 90vw;
-            height: 90vh;
-        }
-
-        #description {
-            grid-area: description;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #story {
-            grid-area: story;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #controls {
-            grid-area: controls;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        #actions {
-            grid-area: actions;
-            display: flex;
-            gap: 10px;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: cursive;
+        }
+        
+        #gameContainer {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding-bottom: 20px;
+            padding-right: 20px;
+            padding-top: 0px;
+        }
+        #gameBoard {
+            display: grid;
+            grid-template-columns: repeat(20, 40px);
+            grid-template-rows: repeat(15, 40px);
+            gap: 2px;
+            width: 840px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            
+            
+        }
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; 
+            z-index: 1001;
         }
 
-        #gameBoard {
-            grid-area: game;
-            display: grid;
-            grid-template-columns: repeat(20, 20px);
-            grid-template-rows: repeat(15, 20px);
-            gap: 1px;
-            width: 400px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 2px solid #333;
+        #restartButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #c20000;
+            color: white;
+        }
+
+        #restartButton:hover {
+            background-color: #ff0000;
         }
 
         .cell {
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
             background-color: #ddd;
+            position: relative;
         }
         .player {
             background-image: url('pixil-frame-0 (8).png');
             background-size: cover;
             background-position: center;
+            width: 40px;
+            height: 40px;
+            
         }
         .wall {
             background-image: url('fal.png');
             background-size: cover;
             background-position: center;
         }
-        .destructible-wall {
+        .destructible-wall {            
             background-image: url('torhetofal.png');
             background-size: cover;
             background-position: center;
@@ -97,291 +97,1189 @@
             background-image: url('robban_a_bomba.gif');
             background-size: cover;
             background-position: center;
+            width: 40px;
+            height: 40px;
         }
         .explosion {
             background-image: url('robbanas.gif');
             background-size: cover;
             background-position: center;
+            width: 40px;
+            height: 40px;
         }
-        .enemy-basic {
-            background-image: url('alap.png');
+        .freeze-powerup {
+            background-image: url('New Piskel (2).gif');
+            background-size: cover;
+            background-position: center;
+            
+        }
+        .exit {
+            background-image: url('kijarat.png');
             background-size: cover;
             background-position: center;
         }
-        .enemy-mole {
-            background-image: url('falonmegy.png');
+        .bigbomb-powerup {
+            background-image: url('robbanas_plusz_1_power_up.gif');
             background-size: cover;
             background-position: center;
         }
-        .enemy-chicken {
+        .shield-powerup {
+            background-image: url('New Piskel (3).gif'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .tobbomba-powerup{
+            background-image: url('New Piskel (9).gif'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .tudjaholvagy {
             background-image: url('tudjaholvagy.png');
             background-size: cover;
             background-position: center;
         }
-        .powerup-freeze {
-            background-image: url('New Piskel (2).gif');
+        .bober {
+            background-image: url('alap.png');
             background-size: cover;
             background-position: center;
-            opacity: 0;
         }
-        .powerup-bigbomb {
-            background-image: url('robbanas_plusz_1_power_up.gif');
+        .wallwalker {
+            background-image: url('falonmegy.png');
             background-size: cover;
             background-position: center;
-            opacity: 0;
+            z-index: 200; 
         }
-        .powerup-shield {
-            background-image: url('New Piskel (3).gif');
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
+        #container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.262);
+            overflow: hidden;
         }
-        .powerup-multiplebombs {
-            background-image: url('New Piskel (9).gif');
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
+        
+
+        #tortenetGomb {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        #tortenetGomb:hover {
+            background-color: #0056b3;
+        }
+
+        #tortenet {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; 
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+            
+        }
+
+        #tortenet h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        #tortenet p {
+            margin: 15px 0;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        #tortenet .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: white;
+        }
+
+        #tortenet .close:hover {
+            color: red;
+        }
+
+        
+        .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px; 
+    height: 40px;
+    background-image: url('torhetofal.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 100; 
+    display: none; 
+}
+#closeOverlayButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1002; 
+        }
+
+        #closeOverlayButton:hover {
+            background-color: #C70039;
+        }
+
+    
+        nav {
+            position:absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            padding: 10px;
+            padding-left: 2px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        select {
+            margin-left: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        #description {
+            margin-top: 20px;
+            font-family: cursive;
+            color: #000;
+            text-align: center;
+        }
+        #enemyDisplay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(84, 84, 84, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: none; 
+    z-index: 1001;
+    color: whitesmoke;
+    text-align: center; 
+}
+
+#enemyDisplay img {
+    width: 100px;
+    height: 100px; 
+    margin-bottom: 10px;
+    display: block; 
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+        #pauseButton {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 1000;
+}
+
+#pauseButton:hover {
+    background-color: #C70039;
+}
+
+#lensImage {
+            padding-left: 3px;
+            
+            width: 50px;
+            height: 50px; 
+            z-index: 1001; 
+        }
+        #freezImage {
+            padding-left: 474px;
+            
+            width: 50px;
+            height: 50px; 
+            z-index: 1001; 
+        }
+        #shieldImage {
+            padding-left: 3px;
+            
+            width: 50px;
+            height: 50px; 
+            z-index: 1001; 
+        }
+        body {
+            background-image: url('hater.png');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: cursive;
+           
+        }
+        
+        #gameContainer {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding-bottom: 20px;
+            padding-right: 20px;
+            padding-top: 0px;
+        }
+        #gameBoard {
+            display: grid;
+            grid-template-columns: repeat(20, 40px);
+            grid-template-rows: repeat(15, 40px);
+            gap: 2px;
+            width: 840px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            
+            
+        }
         #gameOver {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 20px;
             border-radius: 10px;
-            display: none;
-            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0,  0, 0.2);
+            display: none; 
+            z-index: 1001;
         }
 
-        button {
+        #restartButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #c20000;
+            color: white;
+        }
+
+        #restartButton:hover {
+            background-color: #ff0000;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            background-color: #ddd;
+            position: relative;
+        }
+        .player {
+            background-image: url('pixil-frame-0 (8).png');
+            background-size: cover;
+            background-position: center;
+            width: 40px;
+            height: 40px;
+        }
+        .wall {
+            background-image: url('fal.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .destructible-wall {            
+            background-image: url('torhetofal.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .bomb {
+            background-image: url('robban_a_bomba.gif');
+            background-size: cover;
+            background-position: center;
+            width: 40px;
+            height: 40px;
+        }
+        .explosion {
+            background-image: url('robbanas.gif');
+            background-size: cover;
+            background-position: center;
+            width: 40px;
+            height: 40px;
+        }
+        .freeze-powerup {
+            background-image: url('New Piskel (2).gif');
+            background-size: cover;
+            background-position: center;
+        }
+        .exit {
+            background-image: url('kijarat.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .bigbomb-powerup {
+            background-image: url('robbanas_plusz_1_power_up.gif');
+            background-size: cover;
+            background-position: center;
+        }
+        .shield-powerup {
+            background-image: url('New Piskel (3).gif'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .tobbomba-powerup{
+            background-image: url('New Piskel (9).gif'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .tudjaholvagy {
+            background-image: url('tudjaholvagy.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .bober {
+            background-image: url('alap.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .wallwalker {
+            background-image: url('falonmegy.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 200; 
+        }
+        #container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.262);
+            overflow: hidden;
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .control-button {
             padding: 10px;
-            font-size: 1em;
+            background-color: #007BFF;
+            color: white;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .control-button:hover {
+            background-color: #0056b3;
+        }
+
+        #tortenetGomb {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #tortenetGomb:hover {
+            background-color: #0056b3;
+        }
+
+        #tortenet {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; 
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+        }
+
+        #tortenet h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        #tortenet p {
+            margin: 15px 0;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        #tortenet .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: white;
+        }
+
+        #tortenet .close:hover {
+            color: red;
+        }
+
+        #pauseButton {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+        }
+
+        #pauseButton:hover {
+            background-color: #C70039;
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <div id="description">
-            <p>Leírás: Mozgás a nyilakkal, bomba: Space gomb</p>
-        </div>
-        <div id="story">
-            <p>Hősünket a gonosz JG-boszorkány egy véget nem érő, szörnyekkel teli labirintusba varázsolta, hogy szórakoztassa...</p>
-        </div>
-        <div id="controls">
-            <button onclick="movePlayer(0, -1)">⬆️</button>
-            <div>
-                <button onclick="movePlayer(-1, 0)">⬅️</button>
-                <button onclick="movePlayer(1, 0)">➡️</button>
-            </div>
-            <button onclick="movePlayer(0, 1)">⬇️</button>
-        </div>
-        <div id="actions">
-            <button onclick="placeBomb()">Bomba</button>
-            <button onclick="activateLens()">Kontaktlencse</button>
-        </div>
-        <div id="gameBoard"></div>
-        <div id="gameOver">
-            <h1>MEGHALTÁL!</h1>
-            <button onclick="restartGame()">Újraindítás</button>
-        </div>
+    <button id="pauseButton">SZÜNET</button>
+    <nav>
+        <button id="tortenetGomb">Történet</button>
+        <select id="enemySelect">
+            <option value="">Leírások</option>
+            <option value="basic">Alap ellenség</option>
+            <option value="mole">Vakond ellenség</option>
+            <option value="chicken">Csirke ellenség</option>
+            <option value="freeze">Fagyasztás</option>
+            <option value="bigbomb">Robbanás</option>
+            <option value="shield">Védőpajzs</option>
+            <option value="exit">Kijárat</option>
+            <option value="lencse">Kontaktlencse</option>
+            <option value="player">Játékos</option>
+            
+        </select>
+    </nav>
+    <button id="closeOverlayButton">Kontaktlencse használata</button>
+    <div id="backgroundOverlay"></div>
+    
+    <div id="tortenet">
+        <button class="close">&times;</button>
+        <h3>Történet</h3>
+        <p>Hősünket a gonosz JG-boszorkány egy véget nem érő, szörnyekkel teli labirintusba varázsolta, hogy szórakoztassa...</p>
     </div>
 
-    <script>
-        let playerPos = { x: 0, y: 0 };
-        const gridSizeX = 20;
-        const gridSizeY = 15;
-        const maxEnemies = 10;
-        let enemies = [];
-        let isFrozen = false;
-        let explosionRange = 1;
-        let activePowerups = [];
-        let lensActive = false;
-        const gameOverScreen = document.getElementById("gameOver");
+    <div id="enemyDisplay">
+        <img id="enemyImage" src="" alt="">
+        <p id="enemyDescription"></p>
+        <button id="closeEnemyDisplay">Bezár</button>
+    </div>
 
-        const gameBoard = document.getElementById("gameBoard");
-        const cells = [];
+    
+        <div id="gameContainer">
+            <h2>Bomberman-játék <img id="freezImage" src="nofreez.png" alt="Lencse Kép"><img id="shieldImage" src="nopajzs.png" alt="Lencse Kép"><img id="lensImage" src="nolencse.jpg" alt="Lencse Kép"></h2>
+            <p>Mozgás: Nyílbillentyűk és WASD | Bomba: Space</p>
+          <p>(Bugot tapasztal? Írjon ide: 
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kmetzdominik69@gmail.com&su=Bug%20jelent%C3%A9s%20-%20Bomberman%20j%C3%A1t%C3%A9k&body=Tisztelt%20fejleszt%C5%91!%0D%0AA%20k%C3%B6vetkez%C5%91%20probl%C3%A9m%C3%A1t%20tapasztaltam%20a%20j%C3%A1t%C3%A9kban:%0D%0A" target="_blank">
+                    kmetzdominik69@gmail.com
+                </a> 
+                2030-ra "javítjuk")
+            </p>
+            <div id="gameBoard"><div id="controls">
+                <button class="control-button" id="leftButton">Balra</button>
+                <button class="control-button" id="downButton">Lefelé</button>
+                <button class="control-button" id="upButton">Felfelé</button>
+                <button class="control-button" id="rightButton">Jobbra</button>
+                <button class="control-button" id="bombButton">Bomba</button>
+            </div></div>
+            <div id="gameOver">
+                <h3>MEGHALTÁL!</h3>
+                <button id="restartButton">Újra</button>
+            </div>            
+        </div>
+    </div>
+    <audio id="laughAudio" src="cj.mp3"></audio>
+<script>
+      
+        const leftButton = document.getElementById("leftButton");
+        const rightButton = document.getElementById("rightButton");
+        const upButton = document.getElementById("upButton");
+        const downButton = document.getElementById("downButton");
+        const bombButton = document.getElementById("bombButton");
 
-        function initializeBoard() {
-            gameBoard.innerHTML = "";
-            enemies = [];
-            for (let y = 0; y < gridSizeY; y++) {
-                cells[y] = [];
-                for (let x = 0; x < gridSizeX; x++) {
-                    const cell = document.createElement("div");
-                    cell.classList.add("cell");
-                    if (x === playerPos.x && y === playerPos.y) {
-                        cell.classList.add("player");
-                    } else if (x % 2 === 0 && y % 2 === 0) {
-                        cell.classList.add("wall");
-                    } else if (Math.random() < 0.2) {
-                        cell.classList.add("destructible-wall");
-                    } else if (enemies.length < maxEnemies && Math.random() < 0.1) {
-                        const enemyType = Math.random();
-                        if (enemyType < 0.33) {
-                            cell.classList.add("enemy-basic");
-                            enemies.push({ x, y, type: "basic" });
-                        } else if (enemyType < 0.66) {
-                            cell.classList.add("enemy-mole");
-                            enemies.push({ x, y, type: "mole" });
-                        } else {
-                            cell.classList.add("enemy-chicken");
-                            enemies.push({ x, y, type: "chicken" });
-                        }
-                    }
-                    cells[y][x] = cell;
-                    gameBoard.appendChild(cell);
+        leftButton.addEventListener("click", () => movePlayer(-1, 0));
+        rightButton.addEventListener("click", () => movePlayer(1, 0));
+        upButton.addEventListener("click", () => movePlayer(0, -1));
+        downButton.addEventListener("click", () => movePlayer(0, 1));
+        bombButton.addEventListener("click", placeBomb);
+
+    const closeOverlayButton = document.getElementById('closeOverlayButton');
+        const lensImage = document.getElementById('lensImage');
+
+        closeOverlayButton.addEventListener('click', () => {
+            const overlays = document.querySelectorAll('.overlay');
+            overlays.forEach(overlay => {
+                overlay.style.display = 'none'; 
+            });
+
+            lensImage.src = 'lencse.jpg'; 
+
+            let countdown = 59; 
+            closeOverlayButton.disabled = true; 
+
+            const interval = setInterval(() => {
+                closeOverlayButton.textContent = `${countdown} másodperc`;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    lensImage.src = 'nolencse.jpg'; 
+                    closeOverlayButton.textContent = 'Kontaktlencse használata';
+                    closeOverlayButton.disabled = false; 
+                    overlays.forEach(overlay => {
+                        overlay.style.display = 'block';
+                    });
+                }
+            }, 1000); 
+            
+            setTimeout(() => {
+                lensImage.src = 'nolencse.jpg'; 
+            }, 5000); 
+
+            setTimeout(() => {
+                overlays.forEach(overlay => {
+                    overlay.style.display = 'block'; 
+                });
+            }, 5000); 
+
+            setTimeout(() => {
+                closeOverlayButton.disabled = false; 
+            }, 60000); 
+        });
+const gomb = document.getElementById('tortenetGomb');
+        const tortenetDoboz = document.getElementById('tortenet');
+        const backgroundOverlay = document.getElementById('backgroundOverlay');
+        const closeBtn = document.querySelector('#tortenet .close');
+        const enemySelect = document.getElementById('enemySelect');
+        const enemyDisplay = document.getElementById('enemyDisplay');
+        const enemyImage = document.getElementById('enemyImage');
+        const enemyDescription = document.getElementById('enemyDescription');
+        const closeEnemyDisplay = document.getElementById('closeEnemyDisplay');
+
+        gomb.addEventListener('click', () => {
+            backgroundOverlay.style.display = 'block';
+            tortenetDoboz.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            backgroundOverlay.style.display = 'none';
+            tortenetDoboz.style.display = 'none';
+        });
+
+        backgroundOverlay.addEventListener('click', () => {
+            backgroundOverlay.style.display = 'none';
+            tortenetDoboz.style.display = 'none';
+        });
+
+        enemySelect.addEventListener ('change', (event) => {
+            const selectedValue = event.target.value;
+            const descriptions = {
+                basic: {
+                    image: "alap.png",
+                    description: "Alap ellenség: Random módon mozog a pályán."
+                },
+                mole: {
+                    image: "falonmegy.png",
+                    description: "Vakond ellenség: Átmegy a falakon."
+                },
+                chicken: {
+                    image: "tudjaholvagy.png",
+                    description: "Csirke ellenség: Tudja a játékos pozícióját és mindig felé megy."
+                },
+                freeze: {
+                    image: "freeze.png",
+                    description: "Megfagyasztja az ellenségeket 6 másodpercig."
+                },
+                bigbomb: {
+                    image: "robbanas_plusz_1_power_up.gif",
+                    description: "Növeli a robbanás méretét."
+                },
+                shield: {
+                    image: "pajzs.png",
+                    description: "Védelmet ad az ellenségektől és a robbanásoktól 6 másodpercig."
+                },
+                tbomba: {
+                    image: "tobbbomba.png",
+                    description: "Több bombát tudsz letenni."
+                },
+                exit: {
+                    image: "kijarat.png",
+                    description: "Kijárat: ENNYI semmi több."
+                },
+                lencse: {
+                    image: "lencse.jpg",
+                    description: "Kontaktlencse: Láthatóvá teszi a powerupokat 5másodpercig."
+                },
+                player: {
+                    image: "pixil-frame-0 (8).png",
+                    description: "Játékos: története a történet gombra kattintva olvasható."
+                }
+                
+            };
+
+            if (selectedValue) {
+                const selectedDescription = descriptions[selectedValue];
+                enemyImage.src = selectedDescription.image;
+                enemyDescription.textContent = selectedDescription.description;
+                enemyDisplay.style.display = 'block';
+            } else {
+                enemyDisplay.style.display = 'none';
+            }
+        });
+
+        closeEnemyDisplay.addEventListener('click', () => {
+            enemyDisplay.style.display = 'none';
+        });
+
+        
+
+     const gameBoard = document.getElementById("gameBoard");
+const gameOverScreen = document.getElementById("gameOver");
+const restartButton = document.getElementById("restartButton");
+const laughAudio = document.getElementById("laughAudio"); 
+const gridSizeX = 20;
+const gridSizeY = 15;
+let playerPos = { x: 0, y: 0 };
+let startingPosition = { x: 0, y: 0 };
+let explosionRange = 1;
+let bombPlaced = false;
+let isGameOver = false;
+let enemies = [];
+let isFrozen = false;
+let freezeTimer;
+let shieldActive = false;
+let shieldTimer; 
+let maxBombs = 1;
+let activeBombs = 0; 
+
+
+
+function setRandomBackground() {
+        const randomNum = Math.floor(Math.random() * 3) + 1; 
+        let backgroundImage;
+
+        switch (randomNum) {
+            case 1:
+                backgroundImage = 'teli.png';
+                break;
+            case 2:
+                backgroundImage = 'pokol.png';
+                break;
+            case 3:
+                backgroundImage = 'erdo.png';
+                break;
+        }
+
+        document.body.style.backgroundImage = `url('${backgroundImage}')`;
+    }
+
+    let isPaused = false; 
+
+const pauseButton = document.getElementById('pauseButton');
+
+pauseButton.addEventListener('click', () => {
+    isPaused = !isPaused; 
+    if (isPaused) {
+        pauseButton.textContent = "FOLYTATÁS"; 
+    } else {
+        pauseButton.textContent = "SZÜNET"; 
+    }
+});
+function generateLevel() {
+    gameBoard.innerHTML = "";
+    const cells = [];
+    enemies = [];
+
+    const playerArea = [
+        { x: playerPos.x - 1, y: playerPos.y - 1 },
+        { x: playerPos.x - 1, y: playerPos.y },
+        { x: playerPos.x - 1, y: playerPos.y + 1 },
+        { x: playerPos.x, y: playerPos.y - 1 },
+        { x: playerPos.x, y: playerPos.y },
+        { x: playerPos.x, y: playerPos.y + 1 },
+        { x: playerPos.x + 1, y: playerPos.y - 1 },
+        { x: playerPos.x + 1, y: playerPos.y },
+        { x: playerPos.x + 1, y: playerPos.y + 1 },
+    ];
+
+    for (let i = 0; i < gridSizeY; i++) {
+        cells[i] = [];
+        for (let j = 0; j < gridSizeX; j++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+
+            if (i === startingPosition.y && j === startingPosition.x) {
+                cell.classList.add("player");
+                playerPos = { x: startingPosition.x, y: startingPosition.y };
+            } else if (playerArea.some(pos => pos.x === j && pos.y === i)) {
+                
+            } else if (i % 2 === 0 && j % 2 === 0) {
+                cell.classList.add("wall");
+            } else if (Math.random() < 0.5) {
+                cell.classList.add("destructible-wall");
+            }
+
+            cells[i][j] = cell;
+            gameBoard.appendChild(cell);
+        }
+    }
+
+    let enemyCount = 0;
+    while (enemyCount < 10) {
+        const randomX = Math.floor(Math.random() * gridSizeX);
+        const randomY = Math.floor(Math.random() * gridSizeY);
+
+        if (cells[randomY][randomX].classList.length === 1 && 
+            !playerArea.some(pos => pos.x === randomX && pos.y === randomY)) {
+            const enemyType = Math.random();
+            if (enemyType < 0.33) {
+                cells[randomY][randomX].classList.add("bober");
+                enemies.push({ x: randomX, y: randomY, type: "default" });
+            } else if (enemyType < 0.66) {
+                cells[randomY][randomX].classList.add("tudjaholvagy");
+                enemies.push({ x: randomX, y: randomY, type: "tudjaholvagy" });
+            } else {
+                cells[randomY][randomX].classList.add("wallwalker");
+                enemies.push({ x: randomX, y: randomY, type: "wallwalker" });
+            }
+            enemyCount++;
+        }
+    }
+
+    let exitPlaced = false;
+    while (!exitPlaced) {
+        const randomX = Math.floor(Math.random() * gridSizeX);
+        const randomY = Math.floor(Math.random() * gridSizeY);
+
+        const isExitCloseToPlayer = Math.abs(randomX - playerPos.x) <= 5 && Math.abs(randomY - playerPos.y) <= 5;
+        if (cells[randomY][randomX].classList.length === 1 && !isExitCloseToPlayer) {
+            cells[randomY][randomX].classList.add("exit");
+            exitPlaced = true;
+        }
+    }
+
+    let powerupCount = 0;
+    while (powerupCount < 4) {
+        const randomX = Math.floor(Math.random() * gridSizeX);
+        const randomY = Math.floor(Math.random() * gridSizeY);
+
+        if (cells[randomY][randomX].classList.contains("destructible-wall") && 
+            !cells[randomY][randomX].classList.contains("exit")) {
+            const powerupType = Math.random();
+            if (powerupType < 0.5) { 
+            cells[randomY][randomX].classList.add("bigbomb-powerup");
+            } else if (powerupType < 0.7) { 
+            cells[randomY][randomX].classList.add("tobbomba-powerup"); 
+            } else if (powerupType < 0.8) { 
+            cells[randomY][randomX].classList.add("freeze-powerup"); 
+            } else { 
+            cells[randomY][randomX].classList.add("shield-powerup");
+            }
+
+            
+            const overlay = document.createElement("div");
+            overlay.classList.add("overlay");
+            cells[randomY][randomX].appendChild(overlay); 
+            overlay.style.display = 'block'; 
+            powerupCount++;
+        }
+    }
+
+    setRandomBackground();
+
+    return cells;
+}
+let cells = generateLevel();
+let canMove = true;
+function movePlayer(dx, dy) {
+    if (isGameOver || !canMove || isPaused) return; 
+
+    const newX = playerPos.x + dx;
+    const newY = playerPos.y + dy;
+
+    if (newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY) {
+        const targetCell = cells[newY][newX];
+        if (!targetCell.classList.contains("wall") && 
+            !targetCell.classList.contains("destructible-wall") && 
+            !targetCell.classList.contains("bober") &&
+            !targetCell.classList.contains("tudjaholvagy") && 
+            !targetCell.classList.contains("wallwalker")) {
+            
+            cells[playerPos.y][playerPos.x].classList.remove("player");
+            playerPos.x = newX;
+            playerPos.y = newY;
+            cells[playerPos.y][playerPos.x].classList.add("player");
+
+            if (targetCell.classList.contains("exit")) {
+                alert("Tovább a következő pályára!");
+                playerPos = { x: 0, y: 0 }; 
+                startingPosition = { x: 0, y: 0 }; 
+                cells = generateLevel(); 
+            }
+
+            if (targetCell.classList.contains("bigbomb-powerup")) {
+                targetCell.classList.remove("bigbomb-powerup");
+                explosionRange += 1; 
+            }
+
+            if (targetCell.classList.contains("freeze-powerup")) {
+                targetCell.classList.remove("freeze-powerup");
+                activateFreeze();
+            }
+
+            if (targetCell.classList.contains("shield-powerup")) {
+                targetCell.classList.remove("shield-powerup");
+                activateShield();
+            }
+            
+            if (targetCell.classList.contains("tobbomba-powerup")) {
+    targetCell.classList.remove("tobbomba-powerup");
+    maxBombs++; 
+}
+
+
+            if (targetCell.classList.contains("explosion")) {
+                if (!shieldActive) {
+                    gameOver();
                 }
             }
         }
+    }
 
-        function movePlayer(dx, dy) {
-            const newX = playerPos.x + dx;
-            const newY = playerPos.y + dy;
-            if (
-                newX >= 0 &&
-                newY >= 0 &&
-                newX < gridSizeX &&
-                newY < gridSizeY &&
-                !cells[newY][newX].classList.contains("wall") &&
-                !cells[newY][newX].classList.contains("destructible-wall")
-            ) {
-                cells[playerPos.y][playerPos.x].classList.remove("player");
-                playerPos.x = newX;
-                playerPos.y = newY;
-                cells[playerPos.y][playerPos.x].classList.add("player");
+    canMove = false;
+    setTimeout(() => {
+        canMove = true; 
+    }, 100);
+}
+
+
+function activateShield() {
+    shieldActive = true;
+    document.getElementById('shieldImage').src = 'pajzs.png'; 
+    shieldTimer = setTimeout(() => {
+        shieldActive = false;
+        document.getElementById('shieldImage').src = 'nopajzs.png'; 
+        
+    }, 6000);
+}
+
+function activateFreeze() {
+    isFrozen = true;
+    document.getElementById('freezImage').src = 'freeze.png'; 
+    enemies.forEach(enemy => {
+        cells[enemy.y][enemy.x].classList.add("frozen");
+    });
+
+    freezeTimer = setTimeout(() => {
+        isFrozen = false;
+        document.getElementById('freezImage').src = 'nofreez.png'; 
+        enemies.forEach(enemy => {
+            cells[enemy.y][enemy.x].classList.remove("frozen");
+        });
+    }, 6000);
+}
+
+function placeBomb() {
+    if (activeBombs >= maxBombs || isGameOver || isPaused) return; 
+
+    const bombX = playerPos.x;
+    const bombY = playerPos.y;
+
+    if (cells[bombY][bombX].classList.contains("bomb")) return; 
+
+    cells[bombY][bombX].classList.add("bomb");
+    activeBombs++;
+
+    setTimeout(() => {
+        cells[bombY][bombX].classList.remove("bomb");
+        explode(bombX, bombY);
+        activeBombs--; 
+    }, 2000);
+}
+
+
+function explode(x, y) {
+    const directions = [
+        { dx: 0, dy: -1 },
+        { dx: 0, dy: 1 },
+        { dx: -1, dy: 0 },
+        { dx: 1, dy: 0 },
+    ];
+
+    cells[y][x].classList.add("explosion");
+
+    let playerHit = x === playerPos.x && y === playerPos.y;
+
+    directions.forEach(dir => {
+        for (let i = 1; i <= explosionRange; i++) {
+            const newX = x + dir.dx * i;
+            const newY = y + dir.dy * i;
+
+            if (newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY) {
+                const cell = cells[newY][newX];
+
+                if (cell.classList.contains("wall")) {
+                    break;
+                }
+
+                if (cell.classList.contains("destructible-wall")) {
+                    cell.classList.remove("destructible-wall");
+                    const overlay = cell.querySelector('.overlay');
+                    if (overlay) {
+                        overlay.remove();
+                    }
+                }
+
+                if (cell.classList.contains("bober") || cell.classList.contains("tudjaholvagy") || cell.classList.contains("wallwalker")) {
+                    cell.classList.remove("bober", "tudjaholvagy", "wallwalker");
+                    enemies = enemies.filter(enemy => !(enemy.x === newX && enemy.y === newY));
+                }
+
+                cell.classList.add("explosion");
+
+                if (newX === playerPos.x && newY === playerPos.y) {
+                    if (!shieldActive) {
+                        playerHit = true;
+                    }
+                }
             }
         }
+    });
 
-        function placeBomb() {
-            const bombX = playerPos.x;
-            const bombY = playerPos.y;
-            const cell = cells[bombY][bombX];
-            if (!cell.classList.contains("bomb")) {
-                cell.classList.add("bomb");
-                setTimeout(() => {
-                    cell.classList.remove("bomb");
-                    explode(bombX, bombY);
-                }, 2000);
+    if (playerHit) {
+        gameOver();
+    }
+
+    setTimeout(() => {
+        cells[y][x].classList.remove("explosion");
+        directions.forEach(dir => {
+            for (let i = 1; i <= explosionRange; i++) {
+                const newX = x + dir.dx * i;
+                const newY = y + dir.dy * i;
+
+                if (newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY) {
+                    cells[newY][newX].classList.remove("explosion");
+                }
             }
+        });
+    }, 1000);
+}
+function moveEnemies() {
+    if (isGameOver || isFrozen || isPaused) return;
+
+    enemies.forEach((enemy) => {
+        if (cells[enemy.y][enemy.x].classList.contains("frozen")) {
+            return; 
         }
 
-        function explode(x, y) {
-            const directions = [
-                { dx: 0, dy: -1 },
-                { dx: 0, dy: 1 },
-                { dx: -1, dy: 0 },
-                { dx: 1, dy: 0 },
-            ];
+        const directions = [
+            { dx: 0, dy: -1 },
+            { dx: 0, dy: 1 }, 
+            { dx: -1, dy: 0 }, 
+            { dx: 1, dy: 0 }  
+        ];
 
-            cells[y][x].classList.add("explosion");
-            directions.forEach(({ dx, dy }) => {
-                for (let i = 1; i <= explosionRange; i++) {
-                    const newX = x + dx * i;
-                    const newY = y + dy * i;
-                    if (
-                        newX >= 0 &&
-                        newY >= 0 &&
-                        newX < gridSizeX &&
-                        newY < gridSizeY
-                    ) {
-                        cells[newY][newX].classList.add("explosion");
-                        if (cells[newY][newX].classList.contains("destructible-wall")) {
-                            cells[newY][newX].classList.remove("destructible-wall");
-                        }
-                        if (cells[newY][newX].classList.contains("enemy-basic") ||
-                            cells[newY][newX].classList.contains("enemy-mole") ||
-                            cells[newY][newX].classList.contains("enemy-chicken")) {
-                            cells[newY][newX].classList.remove("enemy-basic", "enemy-mole", "enemy-chicken");
-                            enemies = enemies.filter(e => e.x !== newX || e.y !== newY);
-                        }
+        if (enemy.type === "tudjaholvagy") {
+            let bestDirection = null;
+            let minDistance = Infinity;
+
+            directions.forEach(dir => {
+                const newX = enemy.x + dir.dx;
+                const newY = enemy.y + dir.dy;
+
+                if (
+                    newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY &&
+                    !cells[newY][newX].classList.contains("wall") &&
+                    !cells[newY][newX].classList.contains("destructible-wall") &&
+                    !cells[newY][newX].classList.contains("bober") &&
+                    !cells[newY][newX].classList.contains("bomb") && 
+                    !cells[newY][newX].classList.contains("explosion") 
+                ) {
+                    const distanceToPlayer = Math.abs(newX - playerPos.x) + Math.abs(newY - playerPos.y);
+                    if (distanceToPlayer < minDistance) {
+                        minDistance = distanceToPlayer;
+                        bestDirection = dir;
                     }
                 }
             });
 
-            setTimeout(() => {
-                cells[y][x].classList.remove("explosion");
-                directions.forEach(({ dx, dy }) => {
-                    for (let i = 1; i <= explosionRange; i++) {
-                        const newX = x + dx * i;
-                        const newY = y + dy * i;
-                        if (
-                            newX >= 0 &&
-                            newY >= 0 &&
-                            newX < gridSizeX &&
-                            newY < gridSizeY
-                        ) {
-                            cells[newY][newX].classList.remove("explosion");
-                        }
+            if (bestDirection) {
+                const newX = enemy.x + bestDirection.dx;
+                const newY = enemy.y + bestDirection.dy;
+
+                cells[enemy.y][enemy.x].classList.remove("tudjaholvagy");
+
+                enemy.x = newX;
+                enemy.y = newY;
+
+                if (newX === playerPos.x && newY === playerPos.y) {
+                    if (!shieldActive) {
+                        gameOver();
                     }
-                });
-            }, 1000);
-        }
-
-        function moveEnemies() {
-            if (isFrozen) return;
-            enemies.forEach(enemy => {
-                let dir;
-                if (enemy.type === "chicken") {
-                    dir = moveTowardPlayer(enemy);
                 } else {
-                    dir = randomDirection();
+                    cells[enemy.y][enemy.x].classList.add("tudjaholvagy");
                 }
+            }
+        } else if (enemy.type === "wallwalker") {
+            const newDirection = directions[Math.floor(Math.random() * directions.length)];
+            const newX = enemy.x + newDirection.dx;
+            const newY = enemy.y + newDirection.dy;
 
-                const newX = enemy.x + dir.dx;
-                const newY = enemy.y + dir.dy;
-                if (
-                    newX >= 0 &&
-                    newY >= 0 &&
-                    newX < gridSizeX &&
-                    newY < gridSizeY &&
-                    !cells[newY][newX].classList.contains("wall") &&
-                    (enemy.type === "mole" || !cells[newY][newX].classList.contains("destructible-wall")) &&
-                    !cells[newY][newX].classList.contains("bomb")
-                ) {
-                    cells[enemy.y][enemy.x].classList.remove(`enemy-${enemy.type}`);
-                    enemy.x = newX;
-                    enemy.y = newY;
-                    cells[enemy.y][enemy.x].classList.add(`enemy-${enemy.type}`);
-                    if (enemy.x === playerPos.x && enemy.y === playerPos.y) {
+            if (
+                newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY &&
+                !cells[newY][newX].classList.contains("bober") &&
+                !cells[newY][newX].classList.contains("bomb") && 
+                !cells[newY][newX].classList.contains("explosion") 
+            ) {
+                cells[enemy.y][enemy.x].classList.remove("wallwalker");
+                enemy.x = newX;
+                enemy.y = newY;
+                cells[enemy.y][enemy.x].classList.add("wallwalker");
+
+                if (newX === playerPos.x && newY === playerPos.y) {
+                    if (!shieldActive) {
                         gameOver();
                     }
                 }
-            });
-        }
+            }
+        } else {
+            const newDirection = directions[Math.floor(Math.random() * directions.length)];
+            const newX = enemy.x + newDirection.dx;
+            const newY = enemy.y + newDirection.dy;
 
-        function randomDirection() {
-            const directions = [
-                { dx: 0, dy: -1 },
-                { dx: 0, dy: 1 },
-                { dx: -1, dy: 0 },
-                { dx: 1, dy: 0 }
-            ];
-            return directions[Math.floor(Math.random() * directions.length)];
-        }
+            if (
+                newX >= 0 && newY >= 0 && newX < gridSizeX && newY < gridSizeY &&
+                !cells[newY][newX].classList.contains("wall") &&
+                !cells[newY][newX].classList.contains("destructible-wall") &&
+                !cells[newY][newX].classList.contains("bober") &&
+                !cells[newY][newX].classList.contains("bomb") && 
+                !cells[newY][newX].classList.contains("explosion") 
+            ) {
+                cells[enemy.y][enemy.x].classList.remove("bober");
+                enemy.x = newX;
+                enemy.y = newY;
 
-        function moveTowardPlayer(enemy) {
-            const dx = playerPos.x > enemy.x ? 1 : playerPos.x < enemy.x ? -1 : 0;
-            const dy = playerPos.y > enemy.y ? 1 : playerPos.y < enemy.y ? -1 : 0;
-            return { dx, dy };
+                if (newX === playerPos.x && newY === playerPos.y) {
+                    if (!shieldActive) {
+                        gameOver();
+                    }
+                } else {
+                    cells[enemy.y][enemy.x].classList.add("bober");
+                }
+            }
         }
+    });
+}
+function gameOver() {
+    isGameOver = true;
+    clearTimeout(shieldTimer); 
+    laughAudio.play(); 
+    gameOverScreen.style.display = "block";
+}
 
-        function gameOver() {
-            gameOverScreen.style.display = "block";
-        }
+function restartGame() {
+        isGameOver = false;
+        bombPlaced = false;
+        explosionRange = 1;
+        shieldActive = false; 
+        startingPosition = { x: 0, y: 0 };
+        playerPos = { x: 0, y: 0 };
+        cells = generateLevel(); 
+        gameOverScreen.style.display = "none";
+    }
 
-        function restartGame() {
-            gameOverScreen.style.display = "none";
-            playerPos = { x: 0, y: 0 };
-            initializeBoard();
-        }
+    window.addEventListener("keydown", (e) => {
+    if (isGameOver) return;
 
-        setInterval(moveEnemies, 1000);
-        initializeBoard();
-    </script>
+    switch (e.key) {
+        case "ArrowUp":
+        case "w":
+            movePlayer(0, -1);
+            break;
+        case "ArrowDown":
+        case "s":
+            movePlayer(0, 1);
+            break;
+        case "ArrowLeft":
+        case "a":
+            movePlayer(-1, 0);
+            break;
+        case "ArrowRight":
+        case "d":
+            movePlayer(1, 0);
+            break;
+        case " ":
+            placeBomb();
+            break;
+    }
+});
+
+restartButton.addEventListener("click", restartGame);
+setInterval(moveEnemies, 1000);
+showOverlays();
+</script>
+
 </body>
 </html>
