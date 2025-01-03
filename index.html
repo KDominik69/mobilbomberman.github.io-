@@ -344,21 +344,31 @@
     flex-direction: column;
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px; /* Bal oldalra helyezés */
+    align-items: center; /* Középre igazítás */
 }
 
 button {
     margin: 5px;
-    padding: 10px;
+    padding: 15px; /* Nagyobb gombok */
     font-size: 20px;
+    border-radius: 50%; /* Kör alakú gombok */
+    border: none; /* Határ eltávolítása */
+    background-color: #007BFF; /* Gomb háttérszíne */
+    color: white; /* Gomb szöveg színe */
+    cursor: pointer; /* Kéz kurzor */
+}
+
+button:hover {
+    background-color: #0056b3; /* Hover állapot színe */
 }
     </style>
 </head>
 <body>
     <div id="controls">
         <button id="upButton">↑</button>
-        <button id="downButton">↓</button>
         <button id="leftButton">←</button>
+        <button id="downButton">↓</button>
         <button id="rightButton">→</button>
         <button id="bombButton">Bomba</button>
     </div>
