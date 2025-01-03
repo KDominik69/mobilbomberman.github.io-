@@ -341,11 +341,15 @@
         }
         #controls {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Vízszintes elrendezés */
     position: fixed;
     bottom: 20px;
     left: 20px; /* Bal oldalra helyezés */
     align-items: center; /* Középre igazítás */
+}
+
+#controls > div {
+    display: flex; /* A bal és jobb gombok vízszintes elrendezése */
 }
 
 button {
@@ -367,10 +371,12 @@ button:hover {
 <body>
     <div id="controls">
         <button id="upButton">↑</button>
-        <button id="leftButton">←</button>
+        <div>
+            <button id="leftButton">←</button>
+            <button id="bombButton">Bomba</button>
+            <button id="rightButton">→</button>
+        </div>
         <button id="downButton">↓</button>
-        <button id="rightButton">→</button>
-        <button id="bombButton">Bomba</button>
     </div>
     <button id="pauseButton">SZÜNET</button>
     <nav>
