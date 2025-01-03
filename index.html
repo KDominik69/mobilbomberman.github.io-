@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Bomberman-játék</title>
     <style>
         body {
@@ -29,15 +29,15 @@
         }
         #gameBoard {
             display: grid;
-            grid-template-columns: repeat(20, 40px);
-            grid-template-rows: repeat(15, 40px);
+            grid-template-columns: repeat(20, 20px);
+            grid-template-rows: repeat(15, 20px);
             gap: 2px;
-            width: 840px;
+            width: 400px;
             margin: 0 auto;
             border: 2px solid #333;
-            
-            
         }
+    
+
         #gameOver {
             position: absolute;
             top: 50%;
@@ -69,20 +69,20 @@
         }
 
         .cell {
-            width: 40px;
-            height: 40px;
+            width: 20px; 
+            height: 20px;
             background-color: white;
             background-color: #ddd;
             position: relative;
         }
+       
         .player {
-            background-image: url('pixil-frame-0 (8).png');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-            
-        }
+    background-image: url('pixil-frame-0 (8).png');
+    background-size: cover; /* Esetleg próbáld ki a 'contain' értéket is */
+    background-position: center;
+    width: 20px; /* Esetleg csökkentsd, ha mobilon nem jelenik meg jól */
+    height: 20px; /* Esetleg csökkentsd, ha mobilon nem jelenik meg jól */
+}
         .wall {
             background-image: url('fal.png');
             background-size: cover;
@@ -94,19 +94,20 @@
             background-position: center;
         }
         .bomb {
-            background-image: url('robban_a_bomba.gif');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-        }
-        .explosion {
-            background-image: url('robbanas.gif');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-        }
+    background-image: url('robban_a_bomba.gif');
+    background-size: contain; /* Változtasd 'cover'-ről 'contain'-ra */
+    background-position: center;
+    width: 20px; /* Cellák méretéhez igazítva */
+    height: 20px; /* Cellák méretéhez igazítva */
+}
+
+.explosion {
+    background-image: url('robbanas.gif');
+    background-size: contain; /* Változtasd 'cover'-ről 'contain'-ra */
+    background-position: center;
+    width: 20px; /* Cellák méretéhez igazítva */
+    height: 20px; /* Cellák méretéhez igazítva */
+}
         .freeze-powerup {
             background-image: url('New Piskel (2).gif');
             background-size: cover;
@@ -225,26 +226,26 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 40px; 
-    height: 40px;
-    background-image: url('torhetofal.png');
-    background-size: cover;
+    width: 20px; 
+    height: 20px;
+    background-image: url('torhetofal.png'); /* Ellenőrizd az elérhetőséget */
+    background-size: cover; /* Esetleg próbáld ki a 'contain' értéket is */
     background-position: center;
     z-index: 100; 
-    display: none; 
+    display: none; /* Ellenőrizd, hogy a megjelenítési logika helyes-e */
 }
 #closeOverlayButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background-color: #FF5733;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1002; 
-        }
+    position: fixed;
+    bottom: 100px; /* A gomb helyének beállítása */
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1002; 
+}
 
         #closeOverlayButton:hover {
             background-color: #C70039;
@@ -338,263 +339,29 @@
             height: 50px; 
             z-index: 1001; 
         }
-        body {
-            background-image: url('hater.png');
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: cursive;
-           
-        }
-        
-        #gameContainer {
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            padding-bottom: 20px;
-            padding-right: 20px;
-            padding-top: 0px;
-        }
-        #gameBoard {
-            display: grid;
-            grid-template-columns: repeat(20, 40px);
-            grid-template-rows: repeat(15, 40px);
-            gap: 2px;
-            width: 840px;
-            margin: 0 auto;
-            border: 2px solid #333;
-            
-            
-        }
-        #gameOver {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0,  0, 0.2);
-            display: none; 
-            z-index: 1001;
-        }
-
-        #restartButton {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #c20000;
-            color: white;
-        }
-
-        #restartButton:hover {
-            background-color: #ff0000;
-        }
-
-        .cell {
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            background-color: #ddd;
-            position: relative;
-        }
-        .player {
-            background-image: url('pixil-frame-0 (8).png');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-        }
-        .wall {
-            background-image: url('fal.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .destructible-wall {            
-            background-image: url('torhetofal.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .bomb {
-            background-image: url('robban_a_bomba.gif');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-        }
-        .explosion {
-            background-image: url('robbanas.gif');
-            background-size: cover;
-            background-position: center;
-            width: 40px;
-            height: 40px;
-        }
-        .freeze-powerup {
-            background-image: url('New Piskel (2).gif');
-            background-size: cover;
-            background-position: center;
-        }
-        .exit {
-            background-image: url('kijarat.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .bigbomb-powerup {
-            background-image: url('robbanas_plusz_1_power_up.gif');
-            background-size: cover;
-            background-position: center;
-        }
-        .shield-powerup {
-            background-image: url('New Piskel (3).gif'); 
-            background-size: cover;
-            background-position: center;
-        }
-        .tobbomba-powerup{
-            background-image: url('New Piskel (9).gif'); 
-            background-size: cover;
-            background-position: center;
-        }
-        .tudjaholvagy {
-            background-image: url('tudjaholvagy.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .bober {
-            background-image: url('alap.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .wallwalker {
-            background-image: url('falonmegy.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 200; 
-        }
-        #container {
-            display: flex;
-            width: 90%;
-            max-width: 1200px;
-            background-color: rgba(255, 255, 255, 0);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.262);
-            overflow: hidden;
-        }
-
         #controls {
-            position: fixed;
-            bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 20px;
-        }
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
 
-        .control-button {
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            flex: 1;
-            margin: 0 5px;
-        }
-
-        .control-button:hover {
-            background-color: #0056b3;
-        }
-
-        #tortenetGomb {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        #tortenetGomb:hover {
-            background-color: #0056b3;
-        }
-
-        #tortenet {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none; 
-            z-index: 1000;
-            text-align: center;
-            width: 300px;
-        }
-
-        #tortenet h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.5em;
-        }
-
-        #tortenet p {
-            margin: 15px 0;
-            font-size: 1em;
-            line-height: 1.5;
-        }
-
-        #tortenet .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 1.2em;
-            cursor: pointer;
-            color: white;
-        }
-
-        #tortenet .close:hover {
-            color: red;
-        }
-
-        #pauseButton {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: #FF5733;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 1000;
-        }
-
-        #pauseButton:hover {
-            background-color: #C70039;
-        }
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 20px;
+}
     </style>
 </head>
 <body>
+    <div id="controls">
+        <button id="upButton">↑</button>
+        <button id="downButton">↓</button>
+        <button id="leftButton">←</button>
+        <button id="rightButton">→</button>
+        <button id="bombButton">Bomba</button>
+    </div>
     <button id="pauseButton">SZÜNET</button>
     <nav>
         <button id="tortenetGomb">Történet</button>
@@ -637,13 +404,7 @@
                 </a> 
                 2030-ra "javítjuk")
             </p>
-            <div id="gameBoard"><div id="controls">
-                <button class="control-button" id="leftButton">Balra</button>
-                <button class="control-button" id="downButton">Lefelé</button>
-                <button class="control-button" id="upButton">Felfelé</button>
-                <button class="control-button" id="rightButton">Jobbra</button>
-                <button class="control-button" id="bombButton">Bomba</button>
-            </div></div>
+            <div id="gameBoard"></div>
             <div id="gameOver">
                 <h3>MEGHALTÁL!</h3>
                 <button id="restartButton">Újra</button>
@@ -652,19 +413,11 @@
     </div>
     <audio id="laughAudio" src="cj.mp3"></audio>
 <script>
-      
-        const leftButton = document.getElementById("leftButton");
-        const rightButton = document.getElementById("rightButton");
-        const upButton = document.getElementById("upButton");
-        const downButton = document.getElementById("downButton");
-        const bombButton = document.getElementById("bombButton");
-
-        leftButton.addEventListener("click", () => movePlayer(-1, 0));
-        rightButton.addEventListener("click", () => movePlayer(1, 0));
-        upButton.addEventListener("click", () => movePlayer(0, -1));
-        downButton.addEventListener("click", () => movePlayer(0, 1));
-        bombButton.addEventListener("click", placeBomb);
-
+    document.getElementById('upButton').addEventListener('click', () => movePlayer(0, -1));
+document.getElementById('downButton').addEventListener('click', () => movePlayer(0, 1));
+document.getElementById('leftButton').addEventListener('click', () => movePlayer(-1, 0));
+document.getElementById('rightButton').addEventListener('click', () => movePlayer(1, 0));
+document.getElementById('bombButton').addEventListener('click', placeBomb);
     const closeOverlayButton = document.getElementById('closeOverlayButton');
         const lensImage = document.getElementById('lensImage');
 
