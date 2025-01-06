@@ -26,6 +26,7 @@
             padding-bottom: 20px;
             padding-right: 20px;
             padding-top: 0px;
+            padding-bottom: 0px;
         }
         #gameBoard {
             display: grid;
@@ -228,24 +229,13 @@
     left: 0;
     width: 20px; 
     height: 20px;
-    background-image: url('torhetofal.png'); /* Ellenőrizd az elérhetőséget */
-    background-size: cover; /* Esetleg próbáld ki a 'contain' értéket is */
+    background-image: url('torhetofal.png'); 
+    background-size: cover; 
     background-position: center;
     z-index: 100; 
-    display: none; /* Ellenőrizd, hogy a megjelenítési logika helyes-e */
+    display: none; 
 }
-#closeOverlayButton {
-    position: fixed;
-    bottom: 100px; /* A gomb helyének beállítása */
-    right: 20px;
-    padding: 10px 15px;
-    background-color: #FF5733;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1002; 
-}
+
 
         #closeOverlayButton:hover {
             background-color: #C70039;
@@ -301,8 +291,8 @@
 
         #pauseButton {
     position: absolute;
-    top: 10px;
-    left: 50%;
+    top: 60px; 
+    left: 100px;
     transform: translateX(-50%);
     padding: 10px 20px;
     background-color: #FF5733;
@@ -320,63 +310,79 @@
 
 #lensImage {
             padding-left: 3px;
-            
-            width: 50px;
-            height: 50px; 
+            width: 40px;
+            height: 40px; 
             z-index: 1001; 
         }
         #freezImage {
-            padding-left: 474px;
-            
-            width: 50px;
-            height: 50px; 
+            padding-left: 101px;
+            width: 40px;
+            height: 40px; 
             z-index: 1001; 
         }
         #shieldImage {
             padding-left: 3px;
-            
-            width: 50px;
-            height: 50px; 
+            width: 40px;
+            height: 40px; 
             z-index: 1001; 
         }
         #controls {
     display: flex;
-    flex-direction: column; /* Vízszintes elrendezés */
+    flex-direction: column; 
     position: fixed;
     bottom: 20px;
-    left: 20px; /* Bal oldalra helyezés */
-    align-items: center; /* Középre igazítás */
+    left: 20px; 
+    align-items: center; 
+    z-index: 20000;
 }
 
 #controls > div {
-    display: flex; /* A bal és jobb gombok vízszintes elrendezése */
+    display: flex; 
 }
 
 button {
-    margin: 5px;
-    padding: 15px; /* Nagyobb gombok */
+    margin: 3px;
+    padding: 10px; 
     font-size: 20px;
-    border-radius: 50%; /* Kör alakú gombok */
-    border: none; /* Határ eltávolítása */
-    background-color: #007BFF; /* Gomb háttérszíne */
-    color: white; /* Gomb szöveg színe */
-    cursor: pointer; /* Kéz kurzor */
+    border-radius: 50%; 
+    border: none; 
+    color: white; 
+    cursor: pointer; 
+    
 }
 
-button:hover {
-    background-color: #0056b3; /* Hover állapot színe */
+
+#closeOverlayButton {
+    font-size: 15px;
+    position: fixed;
+    bottom: 100px; 
+    right: 1px;
+    padding: 10px 15px;
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1002; 
+    
+}
+#bombButton{
+    position: fixed;
+    bottom: 0px; 
+    right: 1px;
+    padding: 10px 15px;
 }
     </style>
 </head>
 <body>
     <div id="controls">
-        <button id="upButton">↑</button>
+        <button id="upButton">⬆️</button>
         <div>
-            <button id="leftButton">←</button>
-            <button id="bombButton">Bomba</button>
-            <button id="rightButton">→</button>
+            <button id="leftButton">⬅️</button>
+            <button id="bombButton">💣</button>
+            <button id="rightButton">➡️</button>
         </div>
-        <button id="downButton">↓</button>
+        <button id="downButton">⬇️</button>
     </div>
     <button id="pauseButton">SZÜNET</button>
     <nav>
@@ -413,13 +419,7 @@ button:hover {
     
         <div id="gameContainer">
             <h2>Bomberman-játék <img id="freezImage" src="nofreez.png" alt="Lencse Kép"><img id="shieldImage" src="nopajzs.png" alt="Lencse Kép"><img id="lensImage" src="nolencse.jpg" alt="Lencse Kép"></h2>
-            <p>Mozgás: Nyílbillentyűk és WASD | Bomba: Space</p>
-          <p>(Bugot tapasztal? Írjon ide: 
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kmetzdominik69@gmail.com&su=Bug%20jelent%C3%A9s%20-%20Bomberman%20j%C3%A1t%C3%A9k&body=Tisztelt%20fejleszt%C5%91!%0D%0AA%20k%C3%B6vetkez%C5%91%20probl%C3%A9m%C3%A1t%20tapasztaltam%20a%20j%C3%A1t%C3%A9kban:%0D%0A" target="_blank">
-                    kmetzdominik69@gmail.com
-                </a> 
-                2030-ra "javítjuk")
-            </p>
+            
             <div id="gameBoard"></div>
             <div id="gameOver">
                 <h3>MEGHALTÁL!</h3>
